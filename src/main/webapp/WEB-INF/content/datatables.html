@@ -1,0 +1,67 @@
+<html>
+
+
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css"/>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+
+
+	<body>
+		<h1>Datatables Test</h1>
+		
+		
+	    <div class="container">
+	        <table id="table_users" name="table_users" class="table">
+	            <thead>
+	                <tr>
+	                    <th>ID</th>
+	                    <th>Username</th>
+	                    <th>FirstName</th>
+	                    <th>LastName</th>
+	                </tr>
+	            </thead>
+	        </table>
+	    </div>
+	
+	
+	</body>
+	<script>
+	    $('#table_users').DataTable({
+	        ajax: { url:'../test/users',
+	        		dataSrc: 'data',
+	        		data: function (data) {
+	        	      for (var i = 0, len = data.columns.length; i < len; i++) {
+	        	        if (! data.columns[i].search.value) delete data.columns[i].search;
+	        	        if (data.columns[i].searchable === true) delete data.columns[i].searchable;
+	        	        if (data.columns[i].orderable === true) delete data.columns[i].orderable;
+	        	        if (data.columns[i].data === data.columns[i].name) delete data.columns[i].name;
+	        	      }
+	        	      delete data.search.regex;
+	        		}
+	        },
+	        serverSide: true,
+	        columns: [
+	            {
+	                data: 'id'
+	            },
+	            {
+	                data: 'userName'
+	            },	            
+	            {
+	                data: 'firstName'
+	            },
+	            {
+	                data: 'lastName'
+	            }
+	        ]
+	    });
+	    
+	    $('#table_users').on( 'draw.dt', function () {
+	        console.log('Datatables reload');
+	    } );
+	</script>
+</html>
