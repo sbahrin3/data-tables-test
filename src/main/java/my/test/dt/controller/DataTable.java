@@ -3,6 +3,12 @@ package my.test.dt.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author Shamsul Bahrin
+ *
+ * @param <T>
+ */
 public class DataTable<T> {
 	
 	private List<T> data = new ArrayList<T>();

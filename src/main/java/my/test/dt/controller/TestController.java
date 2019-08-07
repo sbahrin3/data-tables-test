@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import my.test.dt.Persistence;
 import my.test.dt.entity.User;
 
+/**
+ * 
+ * @author Shamsul Bahrin
+ *
+ */
 
 @RestController
 @RequestMapping("test")
@@ -29,16 +34,10 @@ public class TestController {
 		String recordStart = req.getParameter("start");
 		String recordLength = req.getParameter("length");
 		String searchValue = req.getParameter("search[value]");
-			
-		int start = 0; 
-		int length = 10;
-		try {
-			start = Integer.parseInt(recordStart);
-		} catch ( Exception e ) { }
-		
-		try {
-			length = Integer.parseInt(recordLength);
-		} catch ( Exception e ) { }
+
+		int start = recordStart != null && recordStart.matches("\\d+") ? Integer.parseInt(recordStart) : 0;
+		int length = recordLength != null && recordLength.matches("\\d+") ? Integer.parseInt(recordLength) : 10;
+		int order = orderColumn != null && orderColumn.matches("\\d+") ? Integer.parseInt(orderColumn) : 10;
 		
 		String q = "select u from User u ";
 		String qf = "";
@@ -48,7 +47,6 @@ public class TestController {
 			q += qf;
 		}
 		
-		int order = Integer.parseInt(orderColumn);
 		switch ( order ) {
 		case 0:
 			q += " order by u.id ";
