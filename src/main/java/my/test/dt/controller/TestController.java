@@ -47,21 +47,10 @@ public class TestController {
 			q += qf;
 		}
 		
-		switch ( order ) {
-		case 0:
-			q += " order by u.id ";
-			break;
-		case 1:
-			q += " order by u.userName ";
-			break;
-		case 2:
-			q += " order by u.firstName ";
-			break;
-		case 3:
-			q += " order by u.lastName ";
-			break;
-		}
-		q += ("desc".equals(orderDirection) ? "desc" : "asc");
+		String[] fields = {"id", "userName", "firstName", "lastName"};
+		q += " order by u." + fields[order];
+		
+		q += ("desc".equals(orderDirection) ? " desc" : " asc");
 		
 		List<User> users = db.list(q, start, length);
 
