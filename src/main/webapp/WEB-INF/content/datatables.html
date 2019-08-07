@@ -12,8 +12,6 @@
 
 	<body>
 		<h1>Datatables Test</h1>
-		
-		
 	    <div class="container">
 	        <table id="table_users" name="table_users" class="table">
 	            <thead>
@@ -26,42 +24,41 @@
 	            </thead>
 	        </table>
 	    </div>
-	
-	
+
+		<script>
+		    $('#table_users').DataTable({
+		        ajax: { url:'../test/users',
+		        		dataSrc: 'data',
+		        		data: function (data) {
+		        	      for (var i = 0, len = data.columns.length; i < len; i++) {
+		        	        if (! data.columns[i].search.value) delete data.columns[i].search;
+		        	        if (data.columns[i].searchable === true) delete data.columns[i].searchable;
+		        	        if (data.columns[i].orderable === true) delete data.columns[i].orderable;
+		        	        if (data.columns[i].data === data.columns[i].name) delete data.columns[i].name;
+		        	      }
+		        	      delete data.search.regex;
+		        		}
+		        },
+		        serverSide: true,
+		        columns: [
+		            {
+		                data: 'id'
+		            },
+		            {
+		                data: 'userName'
+		            },	            
+		            {
+		                data: 'firstName'
+		            },
+		            {
+		                data: 'lastName'
+		            }
+		        ]
+		    });
+		    
+		    $('#table_users').on( 'draw.dt', function () {
+		        console.log('Datatables reload');
+		    } );
+		</script>
 	</body>
-	<script>
-	    $('#table_users').DataTable({
-	        ajax: { url:'../test/users',
-	        		dataSrc: 'data',
-	        		data: function (data) {
-	        	      for (var i = 0, len = data.columns.length; i < len; i++) {
-	        	        if (! data.columns[i].search.value) delete data.columns[i].search;
-	        	        if (data.columns[i].searchable === true) delete data.columns[i].searchable;
-	        	        if (data.columns[i].orderable === true) delete data.columns[i].orderable;
-	        	        if (data.columns[i].data === data.columns[i].name) delete data.columns[i].name;
-	        	      }
-	        	      delete data.search.regex;
-	        		}
-	        },
-	        serverSide: true,
-	        columns: [
-	            {
-	                data: 'id'
-	            },
-	            {
-	                data: 'userName'
-	            },	            
-	            {
-	                data: 'firstName'
-	            },
-	            {
-	                data: 'lastName'
-	            }
-	        ]
-	    });
-	    
-	    $('#table_users').on( 'draw.dt', function () {
-	        console.log('Datatables reload');
-	    } );
-	</script>
 </html>
