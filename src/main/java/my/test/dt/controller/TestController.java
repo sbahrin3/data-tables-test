@@ -29,9 +29,6 @@ public class TestController {
 		String recordStart = req.getParameter("start");
 		String recordLength = req.getParameter("length");
 		String searchValue = req.getParameter("search[value]");
-		
-		System.out.println("orderColumn = " + orderColumn);
-		System.out.println("orderDirection = " + orderDirection);
 			
 		int start = 0; 
 		int length = 10;
@@ -50,6 +47,23 @@ public class TestController {
 			qf += " or u.lastName like '%" + searchValue + "%' ";
 			q += qf;
 		}
+		
+		int order = Integer.parseInt(orderColumn);
+		switch ( order ) {
+		case 0:
+			q += " order by u.id ";
+			break;
+		case 1:
+			q += " order by u.userName ";
+			break;
+		case 2:
+			q += " order by u.firstName ";
+			break;
+		case 3:
+			q += " order by u.lastName ";
+			break;
+		}
+		q += ("desc".equals(orderDirection) ? "desc" : "asc");
 		
 		List<User> users = db.list(q, start, length);
 
