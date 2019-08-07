@@ -37,7 +37,7 @@ public class TestController {
 
 		int start = recordStart != null && recordStart.matches("\\d+") ? Integer.parseInt(recordStart) : 0;
 		int length = recordLength != null && recordLength.matches("\\d+") ? Integer.parseInt(recordLength) : 10;
-		int order = orderColumn != null && orderColumn.matches("\\d+") ? Integer.parseInt(orderColumn) : 10;
+		int order = orderColumn != null && orderColumn.matches("\\d+") ? Integer.parseInt(orderColumn) : 0;
 		
 		String q = "select u from User u ";
 		String qf = "";
