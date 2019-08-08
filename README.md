@@ -71,7 +71,7 @@ dataTable.setiTotalRecords(total);
 dataTable.setiTotalDisplayRecords(totalFiltered);
 ```
 
-I did not consider these as finished yet, there will be updates/enhancements in the future.  If you think some parts need to be improves or I wrongly doing it, please tell me.
+I did not consider these as finished yet, there will be updates/enhancements in the future.  If you think some parts need to be improved or I wrongly doing it, please tell me.
 
 I am using Hibernate as the Persistence API for database operation.
 
