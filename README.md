@@ -47,17 +47,19 @@ int start = recordStart != null && recordStart.matches("\\d+") ? Integer.parseIn
 int length = recordLength != null && recordLength.matches("\\d+") ? Integer.parseInt(recordLength) : 10;
 int order = orderColumn != null && orderColumn.matches("\\d+") ? Integer.parseInt(orderColumn) : 0;
 
+String[] fields = {"id", "userName", "firstName", "lastName"};
+
 String q = "select u from User u ";
 String qf = "";
 if ( !"".equals(searchValue)) {
-	qf += " where u.firstName like '%" + searchValue + "%' ";
-	qf += " or u.lastName like '%" + searchValue + "%' ";
+	for ( int i=0; i < fields.length; i++ ) {
+		qf += i == 0 ? " where " : " or ";
+		qf += "u." + fields[i] + " like '%" + searchValue + "%' ";
+	}
 	q += qf;
 }
 
-String[] fields = {"id", "userName", "firstName", "lastName"};
 q += " order by u." + fields[order];
-
 q += ("desc".equals(orderDirection) ? " desc" : " asc");
 
 List<User> users = db.list(q, start, length);
